@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
+using API.Handlers;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -17,6 +19,13 @@ namespace API
       var app = builder.Build();
 
       app.MapGet("/", () => "Hello World!");
+
+      app.MapGet("/persons", Handler.GetPersons);
+      app.MapGet("/persons/{personId}/interests", (ApplicationContext context, int personId) => Handler.GetInterestsForPerson(context, personId));
+      app.MapGet("/persons/{personId}/links", (ApplicationContext context, int personId) => Handler.GetLinksForPerson(context, personId));
+
+      app.MapPost("/persons/{personId}/interests", async (ApplicationContext context, int personId, HttpContext httpContext) => await Handler.addInterestToPerson(context, personId, httpContext));
+      app.MapPost("/persons/{personId}/interests/{interestId}/links", async (HttpContext httpContext, ApplicationContext context, int personId, int interestId) => await Handler.AddLinksToPersonInterest(httpContext, context, personId, interestId));
 
       app.Run();
     }
