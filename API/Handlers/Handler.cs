@@ -13,7 +13,7 @@ namespace API.Handlers
 {
   public static class Handler
   {
-    public static IResult GetPersons(ApplicationContext context)
+    public static IResult getPersons(ApplicationContext context)
     {
       var personsWithInterests = context.Person
                   .Include(p => p.PersonInterestLinks)
@@ -36,7 +36,7 @@ namespace API.Handlers
       return Results.Json(personsWithInterests);
     }
 
-    public static IResult GetInterestsForPerson(ApplicationContext context, int personId)
+    public static IResult getInterestsForPerson(ApplicationContext context, int personId)
     {
       var InterestsOfAPerson = context.Person
                   .Include(p => p.PersonInterestLinks)
@@ -60,7 +60,7 @@ namespace API.Handlers
       return Results.Json(InterestsOfAPerson);
     }
 
-    public static IResult GetLinksForPerson(ApplicationContext context, int personId)
+    public static IResult getLinksForPerson(ApplicationContext context, int personId)
     {
       var LinksOfAPerson = context.Person
                   .Include(p => p.Links)
@@ -131,7 +131,7 @@ namespace API.Handlers
       }
     }
 
-    public static async Task<IResult> AddLinksToPersonInterest(HttpContext httpContext, ApplicationContext context, int personId, int interestId)
+    public static async Task<IResult> addLinksToPersonInterest(HttpContext httpContext, ApplicationContext context, int personId, int interestId)
     {
       try
       {
